@@ -1,0 +1,29 @@
+{
+    "name": "crochetfeve0251/google-analytics-php",
+    "description": "Google Analytics in PHP with minimum imcompatibilities",
+    "type": "library",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Crochetfeve0251\\GoogleAnalyticsPhp\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Crochetfeve0251\\GoogleAnalyticsPhp\\Tests\\": "tests/"
+        }
+    },
+    "authors": [
+        {
+            "name": "cyrille",
+            "email": "coquardcyr@gmail.com"
+        }
+    ],
+    "require-dev": {
+        "phpunit/phpunit": "^9.5"
+    },
+    "require": {
+        "ext-json": "*",
+        "ext-curl": "*"
+    }
+}
