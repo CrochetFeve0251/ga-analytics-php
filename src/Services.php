@@ -8,7 +8,7 @@ use Crochetfeve0251\GoogleAnalyticsPhp\HTTP\Contracts\ClientInterface;
 
 class Services
 {
-    public function getHttpClient(): ClientInterface {
+    public static function getHttpClient(): ClientInterface {
 
     }
 }
