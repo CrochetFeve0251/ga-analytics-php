@@ -4,6 +4,7 @@
 namespace Crochetfeve0251\GoogleAnalyticsPhp\GA\Abstracts;
 
 
+use Crochetfeve0251\GoogleAnalyticsPhp\HTTP\Request;
 use Crochetfeve0251\GoogleAnalyticsPhp\Services;
 
 abstract class AbstractEvent
@@ -13,6 +14,7 @@ abstract class AbstractEvent
     protected $client_id;
     protected $client;
     protected $type = '';
+    protected $ga_url = '';
 
     /**
      * AbstractEvent constructor.
@@ -36,8 +38,8 @@ abstract class AbstractEvent
           't' => $this->type,
         ];
         $params = $this->addParams($params);
-        $request = Ser
-        $response = $this->client->post();
+        $request = new Request([], $this->ga_url, $params, []);
+        $this->client->post($request);
     }
 
     /**
