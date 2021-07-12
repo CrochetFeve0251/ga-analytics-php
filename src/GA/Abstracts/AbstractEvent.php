@@ -15,7 +15,9 @@ abstract class AbstractEvent
     protected $client;
     protected $type = '';
     protected $ga_url = '';
-
+    protected $impressionList = [];
+    protected $productList = [];
+    protected $transaction;
     /**
      * AbstractEvent constructor.
      * @param string $version

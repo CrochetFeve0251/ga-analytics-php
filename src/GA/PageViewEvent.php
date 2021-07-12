@@ -1,8 +1,10 @@
 <?php
 
 
-namespace Crochetfeve0251\GoogleAnalyticsPhp\GA\Abstracts;
+namespace Crochetfeve0251\GoogleAnalyticsPhp\GA;
 
+
+use Crochetfeve0251\GoogleAnalyticsPhp\GA\Abstracts\AbstractEvent;
 
 class PageViewEvent extends AbstractEvent
 {
