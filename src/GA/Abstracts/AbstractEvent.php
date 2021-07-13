@@ -4,6 +4,10 @@
 namespace Crochetfeve0251\GoogleAnalyticsPhp\GA\Abstracts;
 
 
+use Crochetfeve0251\GoogleAnalyticsPhp\GA\Entities\Impression;
+use Crochetfeve0251\GoogleAnalyticsPhp\GA\Entities\Product;
+use Crochetfeve0251\GoogleAnalyticsPhp\GA\Entities\ProductAction;
+use Crochetfeve0251\GoogleAnalyticsPhp\GA\Entities\Transaction;
 use Crochetfeve0251\GoogleAnalyticsPhp\HTTP\Request;
 use Crochetfeve0251\GoogleAnalyticsPhp\Services;
 
@@ -16,7 +20,7 @@ abstract class AbstractEvent
     protected $type = '';
     protected $ga_url = '';
     protected $impressionList = [];
-    protected $productList = [];
+    protected $productActionList = [];
     protected $transaction;
     /**
      * AbstractEvent constructor.
@@ -44,9 +48,42 @@ abstract class AbstractEvent
         $this->client->post($request);
     }
 
+    protected function renderImpressionList(): string {
+        $result = '';
+        foreach ($this->impressionList as $index => $impression) {
+            $
+        }
+    }
+
     /**
      * @param array<string,string> $params
      * @return array<string,string>
      */
     abstract protected function addParams(array $params): array;
+
+    public function addImpression(Impression $impression): void {
+        $this->impressionList[] = $impression;
+    }
+
+    public function removeImpression(int $index): void {
+        if(count($this->impressionList) > $index) {
+            unset($this->impressionList[$index]);
+            $this->impressionList = array_filter($this->impressionList);
+        }
+    }
+
+    public function addProductAction(ProductAction $productAction): void {
+        $this->productActionList[] = $productAction;
+    }
+
+    public function removeProductAction(int $index): void {
+        if(count($this->productActionList) > $index) {
+            unset($this->productActionList[$index]);
+            $this->productActionList = array_filter($this->productActionList);
+        }
+    }
+
+    public function setTransaction(Transaction $transaction): void {
+        $this->transaction = $transaction;
+    }
 }

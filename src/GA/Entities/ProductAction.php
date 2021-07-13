@@ -4,32 +4,49 @@
 namespace Crochetfeve0251\GoogleAnalyticsPhp\GA\Entities;
 
 
-class Product
+class ProductAction
 {
-    protected $id;
     protected $name;
+    protected $id;
     protected $category;
     protected $brand;
     protected $variant;
     protected $position;
 
     /**
-     * Product constructor.
-     * @param $id
+     * ProductAction constructor.
      * @param $name
+     * @param $id
      * @param $category
      * @param $brand
      * @param $variant
      * @param $position
      */
-    public function __construct($id, $name, $category, $brand, $variant, $position)
+    public function __construct($name, $id, $category, $brand, $variant, $position)
     {
-        $this->id = $id;
         $this->name = $name;
+        $this->id = $id;
         $this->category = $category;
         $this->brand = $brand;
         $this->variant = $variant;
         $this->position = $position;
+    }
+
+
+    /**
+     * @return mixed
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * @param mixed $name
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
     }
 
     /**
@@ -46,22 +63,6 @@ class Product
     public function setId($id)
     {
         $this->id = $id;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getName()
-    {
-        return $this->name;
-    }
-
-    /**
-     * @param mixed $name
-     */
-    public function setName($name)
-    {
-        $this->name = $name;
     }
 
     /**
