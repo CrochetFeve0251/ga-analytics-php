@@ -128,4 +128,10 @@ class ProductAction
     {
         $this->position = $position;
     }
+
+    public function render(int $index = 0): string {
+        $params = [
+            '' => $this->name,
+        ];
+    }
 }

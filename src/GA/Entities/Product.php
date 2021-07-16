@@ -12,6 +12,8 @@ class Product
     protected $brand;
     protected $variant;
     protected $position;
+    protected $indexList;
+    protected $customDimension;
 
     /**
      * Product constructor.
@@ -22,7 +24,7 @@ class Product
      * @param $variant
      * @param $position
      */
-    public function __construct($id, $name, $category, $brand, $variant, $position)
+    public function __construct($id, $name, $category, $brand, $variant, $position, $customDimension)
     {
         $this->id = $id;
         $this->name = $name;
@@ -30,6 +32,7 @@ class Product
         $this->brand = $brand;
         $this->variant = $variant;
         $this->position = $position;
+        $this->customDimension = $customDimension;
     }
 
     /**
@@ -126,5 +129,52 @@ class Product
     public function setPosition($position)
     {
         $this->position = $position;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getIndexList()
+    {
+        return $this->indexList;
+    }
+
+    /**
+     * @param mixed $indexList
+     */
+    public function setIndexList($indexList)
+    {
+        $this->indexList = $indexList;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCustomDimension()
+    {
+        return $this->customDimension;
+    }
+
+    /**
+     * @param mixed $customDimension
+     */
+    public function setCustomDimension($customDimension)
+    {
+        $this->customDimension = $customDimension;
+    }
+
+    public function render(int $index = 0): string {
+        $params = [
+            "il{$this->indexList}pi{$index}id" => $this->id,
+            "il{$this->indexList}pi{$index}nm" => $this->name,
+            "il{$this->indexList}pi{$index}ca" => $this->category,
+            "il{$this->indexList}pi{$index}br" => $this->brand,
+            "il{$this->indexList}pi{$index}va" => $this->variant,
+            "il{$this->indexList}pi{$index}ps" => $this->position,
+            "il{$this->indexList}pi{$index}cd1" => $this->customDimension,
+        ];
+        return array_reduce(array_keys($params), function($carry, $key) use ($params) {
+            return ($carry === "") ? '' : "$carry&" . "$key={$params[$key]}";
+        }, '');
     }
 }
