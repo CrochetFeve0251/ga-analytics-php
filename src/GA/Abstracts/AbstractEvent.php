@@ -20,7 +20,7 @@ abstract class AbstractEvent
     protected $type = '';
     protected $ga_url = '';
     protected $impressionList = [];
-    protected $productActionList = [];
+    protected $productAction;
     protected $transaction;
     /**
      * AbstractEvent constructor.
@@ -50,9 +50,11 @@ abstract class AbstractEvent
 
     protected function renderImpressionList(): string {
         $result = '';
+        /** @var Impression $impression */
         foreach ($this->impressionList as $index => $impression) {
-            $
+            $result .= "&{$impression->render($index)}";
         }
+        return $result;
     }
 
     /**
@@ -72,18 +74,25 @@ abstract class AbstractEvent
         }
     }
 
-    public function addProductAction(ProductAction $productAction): void {
-        $this->productActionList[] = $productAction;
-    }
-
-    public function removeProductAction(int $index): void {
-        if(count($this->productActionList) > $index) {
-            unset($this->productActionList[$index]);
-            $this->productActionList = array_filter($this->productActionList);
-        }
-    }
-
     public function setTransaction(Transaction $transaction): void {
         $this->transaction = $transaction;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getProductAction(): ProductAction
+    {
+        return $this->productAction;
+    }
+
+    /**
+     * @param mixed $productAction
+     */
+    public function setProductAction(ProductAction $productAction)
+    {
+        $this->productAction = $productAction;
+    }
+
+
 }

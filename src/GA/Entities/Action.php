@@ -4,35 +4,49 @@
 namespace Crochetfeve0251\GoogleAnalyticsPhp\GA\Entities;
 
 
-class Product
+class Action
 {
-    protected $id;
     protected $name;
+    protected $id;
     protected $category;
     protected $brand;
     protected $variant;
     protected $position;
-    protected $indexList;
-    protected $customDimension;
 
     /**
-     * Product constructor.
-     * @param $id
+     * ProductAction constructor.
      * @param $name
+     * @param $id
      * @param $category
      * @param $brand
      * @param $variant
      * @param $position
      */
-    public function __construct($id, $name, $category, $brand, $variant, $position, $customDimension)
+    public function __construct($name, $id, $category, $brand, $variant, $position)
     {
-        $this->id = $id;
         $this->name = $name;
+        $this->id = $id;
         $this->category = $category;
         $this->brand = $brand;
         $this->variant = $variant;
         $this->position = $position;
-        $this->customDimension = $customDimension;
+    }
+
+
+    /**
+     * @return mixed
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * @param mixed $name
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
     }
 
     /**
@@ -49,22 +63,6 @@ class Product
     public function setId($id)
     {
         $this->id = $id;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getName()
-    {
-        return $this->name;
-    }
-
-    /**
-     * @param mixed $name
-     */
-    public function setName($name)
-    {
-        $this->name = $name;
     }
 
     /**
@@ -131,47 +129,14 @@ class Product
         $this->position = $position;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getIndexList()
-    {
-        return $this->indexList;
-    }
-
-    /**
-     * @param mixed $indexList
-     */
-    public function setIndexList($indexList)
-    {
-        $this->indexList = $indexList;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getCustomDimension()
-    {
-        return $this->customDimension;
-    }
-
-    /**
-     * @param mixed $customDimension
-     */
-    public function setCustomDimension($customDimension)
-    {
-        $this->customDimension = $customDimension;
-    }
-
     public function render(int $index = 0): array {
         return [
-            "il{$this->indexList}pi{$index}id" => $this->id,
-            "il{$this->indexList}pi{$index}nm" => $this->name,
-            "il{$this->indexList}pi{$index}ca" => $this->category,
-            "il{$this->indexList}pi{$index}br" => $this->brand,
-            "il{$this->indexList}pi{$index}va" => $this->variant,
-            "il{$this->indexList}pi{$index}ps" => $this->position,
-            "il{$this->indexList}pi{$index}cd1" => $this->customDimension,
+            "pr{$index}id" => $this->id,
+            "pr{$index}nm" => $this->name,
+            "pr{$index}ca" => $this->category,
+            "pr{$index}br" => $this->brand,
+            "pr{$index}va" => $this->variant,
+            "pr{$index}ps" => $this->position,
         ];
     }
 }

@@ -42,7 +42,7 @@ class Impression
         }
     }
 
-    public function render(int $index = 0): string {
+    public function render(int $index = 0): array {
         $i = 0;
         return array_reduce(/**
          * @param $carry
@@ -50,9 +50,9 @@ class Impression
          * @return string
          */ $this->productsList, function ($carry, $product) use (&$i, $index) {
             $product->setIndexList($index);
-            $result = "$carry&{$product->render($i)}";
             $i ++;
-            return $result;
-        }, "il{$index}nm={$this->name}");
+            $carry[] = $product->render($i);
+            return $carry;
+        }, ["il{$index}nm" => $this->name]);
     }
 }

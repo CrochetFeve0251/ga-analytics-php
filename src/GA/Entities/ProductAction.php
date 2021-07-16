@@ -7,131 +7,50 @@ namespace Crochetfeve0251\GoogleAnalyticsPhp\GA\Entities;
 class ProductAction
 {
     protected $name;
-    protected $id;
-    protected $category;
-    protected $brand;
-    protected $variant;
-    protected $position;
+
+    protected $actionList = [];
 
     /**
      * ProductAction constructor.
      * @param $name
-     * @param $id
-     * @param $category
-     * @param $brand
-     * @param $variant
-     * @param $position
      */
-    public function __construct($name, $id, $category, $brand, $variant, $position)
+    public function __construct(string $name)
     {
         $this->name = $name;
-        $this->id = $id;
-        $this->category = $category;
-        $this->brand = $brand;
-        $this->variant = $variant;
-        $this->position = $position;
     }
 
-
     /**
-     * @return mixed
+     * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
 
     /**
-     * @param mixed $name
+     * @param string $name
      */
-    public function setName($name)
+    public function setName(string $name)
     {
         $this->name = $name;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getId()
-    {
-        return $this->id;
+    public function addAction(Action $action): void {
+        $this->actionList[] = $action;
     }
 
-    /**
-     * @param mixed $id
-     */
-    public function setId($id)
-    {
-        $this->id = $id;
+    public function removeAction(int $index): void {
+        if(count($this->actionList) > $index) {
+            unset($this->actionList[$index]);
+            $this->actionList = array_filter($this->actionList);
+        }
     }
 
-    /**
-     * @return mixed
-     */
-    public function getCategory()
-    {
-        return $this->category;
-    }
-
-    /**
-     * @param mixed $category
-     */
-    public function setCategory($category)
-    {
-        $this->category = $category;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getBrand()
-    {
-        return $this->brand;
-    }
-
-    /**
-     * @param mixed $brand
-     */
-    public function setBrand($brand)
-    {
-        $this->brand = $brand;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getVariant()
-    {
-        return $this->variant;
-    }
-
-    /**
-     * @param mixed $variant
-     */
-    public function setVariant($variant)
-    {
-        $this->variant = $variant;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getPosition()
-    {
-        return $this->position;
-    }
-
-    /**
-     * @param mixed $position
-     */
-    public function setPosition($position)
-    {
-        $this->position = $position;
-    }
-
-    public function render(int $index = 0): string {
-        $params = [
-            '' => $this->name,
-        ];
+    public function render(int $index = 0): array {
+        $i = 0;
+        return array_reduce($this->actionList, function($carry, $action) use (&$i) {
+            $carry[] = $action->render($i);
+            return $carry;
+        }, ['a' => $this->name]);
     }
 }
