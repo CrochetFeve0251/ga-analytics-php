@@ -16,6 +16,15 @@ class Impression
     protected $productsList = [];
 
     /**
+     * Impression constructor.
+     * @param string $name
+     */
+    public function __construct(string $name)
+    {
+        $this->name = $name;
+    }
+
+    /**
      * @return string
      */
     public function getName(): string
@@ -42,7 +51,9 @@ class Impression
         }
     }
 
-    public function render(int $index = 0): array {
+
+
+    public function render(int $index = 1): array {
         $i = 0;
         return array_reduce(/**
          * @param $carry
