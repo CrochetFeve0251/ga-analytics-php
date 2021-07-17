@@ -4,6 +4,8 @@
 namespace Crochetfeve0251\GoogleAnalyticsPhp\GA\Entities;
 
 
+use Crochetfeve0251\GoogleAnalyticsPhp\GA\Entities\Exceptions\InvalidState;
+
 class Product
 {
     protected $id;
@@ -12,7 +14,7 @@ class Product
     protected $brand;
     protected $variant;
     protected $position;
-    protected $indexList;
+    protected $indexList = 1;
     protected $customDimension;
 
     /**
@@ -24,7 +26,7 @@ class Product
      * @param $variant
      * @param $position
      */
-    public function __construct($id, $name, $category, $brand, $variant, $position, $customDimension)
+    public function __construct(string $id = '', string $name = '', string $category = '', string $brand = '', string $variant = '', string $position = '', string $customDimension = '')
     {
         $this->id = $id;
         $this->name = $name;
@@ -163,8 +165,9 @@ class Product
         $this->customDimension = $customDimension;
     }
 
-    public function render(int $index = 0): array {
-        return [
+    public function render(int $index = 1): array {
+        $result = [];
+        $params = [
             "il{$this->indexList}pi{$index}id" => $this->id,
             "il{$this->indexList}pi{$index}nm" => $this->name,
             "il{$this->indexList}pi{$index}ca" => $this->category,
@@ -173,5 +176,18 @@ class Product
             "il{$this->indexList}pi{$index}ps" => $this->position,
             "il{$this->indexList}pi{$index}cd1" => $this->customDimension,
         ];
+        foreach ($params as $key => $param) {
+            $result = self::addToParams($result, $key, $param);
+        }
+        if(count($result) === 0)
+            throw new InvalidState();
+        return $result;
+    }
+
+    protected static function addToParams($params, $key, $value): array {
+        if($value === '')
+            return $params;
+        $params[$key] = $value;
+        return $params;
     }
 }
