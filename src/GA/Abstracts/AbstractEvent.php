@@ -5,7 +5,6 @@ namespace Crochetfeve0251\GoogleAnalyticsPhp\GA\Abstracts;
 
 
 use Crochetfeve0251\GoogleAnalyticsPhp\GA\Entities\Impression;
-use Crochetfeve0251\GoogleAnalyticsPhp\GA\Entities\Product;
 use Crochetfeve0251\GoogleAnalyticsPhp\GA\Entities\ProductAction;
 use Crochetfeve0251\GoogleAnalyticsPhp\GA\Entities\Transaction;
 use Crochetfeve0251\GoogleAnalyticsPhp\HTTP\Request;
@@ -44,17 +43,32 @@ abstract class AbstractEvent
           't' => $this->type,
         ];
         $params = $this->addParams($params);
+        $params = array_merge($params, $this->renderImpressionList());
+        $params = array_merge($params, $this->renderTransaction());
+        $params = array_merge($params, $this->renderProductAction());
         $request = new Request([], $this->ga_url, $params, []);
         $this->client->post($request);
     }
 
-    protected function renderImpressionList(): string {
-        $result = '';
+    protected function renderImpressionList(): array {
+        $result = [];
         /** @var Impression $impression */
         foreach ($this->impressionList as $index => $impression) {
-            $result .= "&{$impression->render($index)}";
+            $result []= $impression->render($index);
         }
         return $result;
+    }
+
+    protected function renderTransaction(): array {
+        if(! $this->transaction)
+            return  [];
+        return $this->transaction->render();
+    }
+
+    protected function renderProductAction(): array {
+        if(! $this->productAction)
+            return [];
+        return $this->productAction->render();
     }
 
     /**

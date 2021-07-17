@@ -51,8 +51,7 @@ class Impression
          */ $this->productsList, function ($carry, $product) use (&$i, $index) {
             $product->setIndexList($index);
             $i ++;
-            $carry[] = $product->render($i);
-            return $carry;
+            return array_merge($carry, $product->render($i));
         }, ["il{$index}nm" => $this->name]);
     }
 }

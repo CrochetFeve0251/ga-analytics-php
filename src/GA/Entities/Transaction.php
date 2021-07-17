@@ -16,8 +16,8 @@ class Transaction
     protected $productList = [];
 
 
-    protected function render(int $index = 0): string {
-        $params = [
+    protected function render(int $index = 0): array {
+        return [
           't' => $this->type,
           'ti' => $this->id,
           'ta' => $this->affiliation,
@@ -26,10 +26,6 @@ class Transaction
           'tt' => $this->tax,
           'tc' => $this->currency,
         ];
-
-        return array_reduce(array_keys($params), function ($carry, $key) use ($params) {
-            return ($carry === '' ? '' : "$carry&") . "$key={$params[$key]}";
-        }, '');
     }
 
     /**
