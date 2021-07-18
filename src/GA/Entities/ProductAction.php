@@ -49,6 +49,7 @@ class ProductAction
     public function render(int $index = 0): array {
         $i = 0;
         return array_reduce($this->actionList, function($carry, $action) use (&$i) {
+            $i ++;
             return array_merge($carry, $action->render($i));
         }, ['a' => $this->name]);
     }
