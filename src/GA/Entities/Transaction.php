@@ -16,7 +16,7 @@ class Transaction
     protected $productList = [];
 
 
-    protected function render(int $index = 0): array {
+    protected function render(int $index = 1): array {
         return [
           't' => $this->type,
           'ti' => $this->id,
