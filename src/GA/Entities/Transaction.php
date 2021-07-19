@@ -13,10 +13,8 @@ class Transaction
     protected $shipping;
     protected $tax;
     protected $currency;
-    protected $productList = [];
 
-
-    protected function render(int $index = 1): array {
+    public function render(int $index = 1): array {
         return [
           't' => $this->type,
           'ti' => $this->id,
